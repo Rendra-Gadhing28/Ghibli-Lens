@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GhibliLens · potret dongeng</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #f7f3e9 0%, #e8dfd1 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      color: #3c2e1f;
+    }
+
+    .phone-frame {
+      max-width: 420px;
+      width: 100%;
+      background: #fffcf5;
+      border-radius: 48px 48px 36px 36px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 240, 0.8);
+      padding: 28px 22px 32px;
+      border: 2px solid #e2cfb5;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .phone-frame::before {
+      content: "✨";
+      position: absolute;
+      top: 12px;
+      left: 24px;
+      font-size: 22px;
+      opacity: 0.6;
+      transform: rotate(-8deg);
+    }
+
+    .phone-frame::after {
+      content: "🌿";
+      position: absolute;
+      bottom: 8px;
+      right: 24px;
+      font-size: 28px;
+      opacity: 0.4;
+      transform: rotate(10deg);
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #5e4b34;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      text-shadow: 2px 2px 0 rgba(241, 226, 200, 0.7);
+    }
+
+    h1 span {
+      font-size: 1.9rem;
+    }
+
+    .subhead {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #8b7a62;
+      margin-bottom: 22px;
+      border-bottom: 1px dashed #dccbb4;
+      padding-bottom: 14px;
+      font-style: italic;
+    }
+
+    .camera-area {
+      background: #f0e8da;
+      border-radius: 32px;
+      padding: 22px 16px 18px;
+      margin-bottom: 22px;
+      box-shadow: inset 0 2px 8px rgba(160, 130, 90, 0.15), 0 6px 0 #cdb89b;
+      border: 1px solid #dbccb7;
+      transition: all 0.1s ease;
+    }
+
+    .countdown-display {
+      font-size: 4.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: #b48c5c;
+      line-height: 1;
+      margin: 6px 0 8px;
+      letter-spacing: 4px;
+      text-shadow: 0 4px 0 #dac29e;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', monospace;
+    }
+
+    .big-button {
+      background: #f4d9b0;
+      border: none;
+      border-bottom: 6px solid #b48c5c;
+      border-radius: 80px;
+      padding: 18px 18px;
+      width: 100%;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #4e3a26;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.08s linear;
+      box-shadow: 0 10px 0 #9a7a58, 0 8px 18px rgba(0, 0, 0, 0.15);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+
+    .big-button:active {
+      transform: translateY(6px);
+      border-bottom-width: 2px;
+      box-shadow: 0 4px 0 #9a7a58, 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .big-button:disabled {
+      opacity: 0.55;
+      transform: translateY(4px);
+      border-bottom-width: 4px;
+      box-shadow: 0 6px 0 #9a7a58;
+      pointer-events: none;
+    }
+
+    .hint-text {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #a28d72;
+      margin: 8px 0 4px;
+      font-weight: 500;
+    }
+
+    .malu-malu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #efe6d8;
+      border-radius: 28px;
+      padding: 18px 14px 14px;
+      margin-bottom: 22px;
+      border: 1px dashed #c7b29b;
+    }
+
+    .malu-malu p {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #6a5a48;
+      margin-bottom: 12px;
+    }
+
+    .gallery-btn {
+      background: #e5d5c0;
+      border: 2px solid #bca88b;
+      padding: 14px 28px;
+      border-radius: 60px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #4b3e2e;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 0 #a5927a;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .gallery-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 1px 0 #a5927a;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #6b5b45;
+      font-size: 1.2rem;
+      margin: 18px 0 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .section-title span {
+      font-size: 1.4rem;
+    }
+
+    .slider-container {
+      background: #f2eadf;
+      border-radius: 40px;
+      padding: 12px 18px 16px;
+      border: 1px solid #d6c6b2;
+      margin-bottom: 20px;
+    }
+
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      color: #5f4e3a;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    input[type=range] {
+      width: 100%;
+      height: 10px;
+      -webkit-appearance: none;
+      background: #dbcebc;
+      border-radius: 20px;
+      outline: none;
+      margin: 10px 0 6px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 26px;
+      height: 26px;
+      background: #b48c5c;
+      border-radius: 50%;
+      border: 3px solid #fcf5ea;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .style-camera {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #f2eadf;
+      padding: 14px 20px;
+      border-radius: 40px;
+      margin-bottom: 14px;
+      border: 1px solid #d6c6b2;
+    }
+
+    .style-camera label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      color: #4e4032;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    .style-camera input[type=checkbox] {
+      width: 24px;
+      height: 24px;
+      accent-color: #b48c5c;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .result-area {
+      background: #ede3d6;
+      border-radius: 40px;
+      padding: 20px 16px 16px;
+      margin-top: 22px;
+      border: 2px solid #dac29e;
+      box-shadow: inset 0 2px 10px rgba(180, 140, 90, 0.1);
+    }
+
+    .result-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #5f4a32;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .photo-preview {
+      background: #b9a78e;
+      border-radius: 28px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 14px;
+      border: 4px solid #fef9ef;
+      box-shadow: 0 6px 0 #8e7b63;
+      color: #4e3a26;
+      font-weight: 500;
+      font-size: 1rem;
+      background-image: radial-gradient(circle at 20% 30%, #e4d4be 2px, transparent 2px), 
+                        radial-gradient(circle at 80% 70%, #dac29e 2px, transparent 2px);
+    }
+
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .download-btn {
+      background: #b48c5c;
+      border: none;
+      border-bottom: 6px solid #7a5e3e;
+      border-radius: 60px;
+      padding: 16px 20px;
+      width: 100%;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff5e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.08s linear;
+      box-shadow: 0 8px 0 #634b31, 0 8px 16px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.5px;
+    }
+
+    .download-btn:active {
+      transform: translateY(6px);
+      border-bottom-width: 2px;
+      box-shadow: 0 2px 0 #634b31, 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-btn:disabled {
+      opacity: 0.5;
+      transform: translateY(4px);
+      border-bottom-width: 4px;
+      box-shadow: 0 4px 0 #634b31;
+      pointer-events: none;
+    }
+
+    .save-hint {
+      font-size: 0.8rem;
+      text-align: center;
+      color: #8f7b64;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .mt-2 {
+      margin-top: 8px;
+    }
+
+    .soft-glow {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <h1>
+      GhibliLens <span>✨</span>
+    </h1>
+    <div class="subhead">
+      Potret dunia dengan warna dongeng ✨<br>
+      <small>Semua diproses di perangkatmu. Fotomu tidak dikirim ke mana pun.</small>
+    </div>
+
+    <div class="camera-area">
+      <div class="countdown-display" id="countdownDisplay">📸</div>
+      <button class="big-button" id="captureBtn">
+        <span>📷</span> JEPRET
+      </button>
+      <div class="hint-text">Ketuk tombol besar. Hitung mundur 3-2-1, lalu senyum!</div>
+    </div>
+
+    <div class="malu-malu">
+      <p>Eh, kameranya malu-malu 🙈</p>
+      <button class="gallery-btn" id="galleryBtn">
+        <span>🖼️</span> Pilih foto dari galeri
+      </button>
+      <input type="file" id="fileInput" accept="image/*" style="display: none;">
+    </div>
+
+    <div class="section-title">
+      <span>✨</span> Pilih suasana <span>✨</span>
+    </div>
+
+    <div class="slider-container">
+      <div class="slider-label">
+        <span>Intensitas</span>
+        <span id="intensityValue">80%</span>
+      </div>
+      <input type="range" id="intensitySlider" min="0" max="100" value="80" step="1">
+    </div>
+
+    <div class="style-camera">
+      <label>
+        <input type="checkbox" id="dateStampCheck" checked> Cap tanggal
+      </label>
+    </div>
+
+    <div class="result-area" id="resultArea">
+      <div class="result-title">
+        <span>🌿</span> Foto siap! <span>🌿</span>
+      </div>
+      <div class="photo-preview" id="photoPreview">
+        <span style="opacity:0.7;">✨ Hasil foto GhibliLens ✨</span>
+      </div>
+      <button class="download-btn" id="downloadBtn" disabled>
+        <span>⬇️</span> Download PNG
+      </button>
+      <div class="save-hint">Kalau unduhan tidak berjalan, tekan lama fotonya lalu pilih Simpan.</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const countdownDisplay = document.getElementById('countdownDisplay');
+      const captureBtn = document.getElementById('captureBtn');
+      const galleryBtn = document.getElementById('galleryBtn');
+      const fileInput = document.getElementById('fileInput');
+      const intensitySlider = document.getElementById('intensitySlider');
+      const intensityValue = document.getElementById('intensityValue');
+      const dateStampCheck = document.getElementById('dateStampCheck');
+      const photoPreview = document.getElementById('photoPreview');
+      const downloadBtn = document.getElementById('downloadBtn');
+
+      let currentImageBlob = null;
+      let isCapturing = false;
+      let countdownInterval = null;
+      let activeStream = null;
+
+      intensitySlider.addEventListener('input', (e) => {
+        intensityValue.textContent = e.target.value + '%';
+      });
+
+      function displayImageFromBlob(blob) {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        photoPreview.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = 'Foto Ghibli Lens';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        photoPreview.appendChild(img);
+        currentImageBlob = blob;
+        downloadBtn.disabled = false;
+      }
+
+      function resetPreviewToPlaceholder() {
+        photoPreview.innerHTML = '<span style="opacity:0.7;">✨ Hasil foto GhibliLens ✨</span>';
+        currentImageBlob = null;
+        downloadBtn.disabled = true;
+      }
+
+      async function applyGhibliEffect(sourceImage, intensity = 80, withDate = true) {
+        return new Promise((resolve) => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          const MAX_DIM = 1200;
+          let width = sourceImage.width;
+          let height = sourceImage.height;
+          if (width > MAX_DIM || height > MAX_DIM) {
+            const ratio = Math.min(MAX_DIM / width, MAX_DIM / height);
+            width = Math.floor(width * ratio);
+            height = Math.floor(height * ratio);
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(sourceImage, 0, 0, width, height);
+
+          const imageData = ctx.getImageData(0, 0, width, height);
+          const data = imageData.data;
+          const t = Math.min(100, Math.max(0, intensity)) / 100;
+
+          const warmthR = 1.0 + 0.15 * t;
+          const warmthG = 1.0 + 0.05 * t;
+          const warmthB = 1.0 - 0.1 * t;
+          const contrast = 1.0 + 0.2 * t;
+          const brightness = 1.0 + 0.05 * t;
+
+          for (let i = 0; i < data.length; i += 4) {
+            let r = data[i];
+            let g = data[i + 1];
+            let b = data[i + 2];
+
+            r = r * warmthR;
+            g = g * warmthG;
+            b = b * warmthB;
+
+            r = (r - 128) * contrast + 128 + (brightness - 1) * 30;
+            g = (g - 128) * contrast + 128 + (brightness - 1) * 30;
+            b = (b - 128) * contrast + 128 + (brightness - 1) * 30;
+
+            r = r + (255 - r) * 0.06 * t;
+            g = g + (255 - g) * 0.04 * t;
+            b = b + (255 - b) * 0.02 * t;
+
+            data[i] = Math.min(255, Math.max(0, Math.round(r)));
+            data[i + 1] = Math.min(255, Math.max(0, Math.round(g)));
+            data[i + 2] = Math.min(255, Math.max(0, Math.round(b)));
+          }
+
+          ctx.putImageData(imageData, 0, 0);
+
+          if (withDate) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('id-ID', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric'
+            }).replace(/\//g, '-');
+            const timeStr = now.toLocaleTimeString('id-ID', {
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+            const stampText = `${dateStr} ${timeStr}`;
+
+            ctx.font = `bold ${Math.floor(width * 0.04)}px 'Courier New', monospace`;
+            ctx.fillStyle = 'rgba(255, 245, 220, 0.85)';
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+            ctx.textAlign = 'right';
+            ctx.fillText(stampText, width - 20, height - 20);
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+          }
+
+          const gradient = ctx.createRadialGradient(
+            width / 2,
+            height / 2,
+            Math.min(width, height) * 0.3,
+            width / 2,
+            height / 2,
+            Math.max(width, height) * 0.8
+          );
+          gradient.addColorStop(0, 'rgba(0,0,0,0)');
+          gradient.addColorStop(1, 'rgba(80, 60, 40, 0.08)');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, width, height);
+
+          canvas.toBlob((blob) => {
+            resolve(blob);
+          }, 'image/png', 0.98);
+        });
+      }
+
+      async function processAndDisplay(sourceImage) {
+        const intensity = parseInt(intensitySlider.value, 10);
+        const withDate = dateStampCheck.checked;
+        try {
+          const processedBlob = await applyGhibliEffect(sourceImage, intensity, withDate);
+          displayImageFromBlob(processedBlob);
+        } catch (err) {
+          console.error('Gagal memproses gambar', err);
+          alert('Ada masalah saat memproses foto. Coba lagi ya ✨');
+        }
+      }
+
+      galleryBtn.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            processAndDisplay(img);
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = '';
+      });
+
+      captureBtn.addEventListener('click', async () => {
+        if (isCapturing) return;
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert('Kamera tidak didukung di browser ini. Coba pilih dari galeri ya 🖼️');
+          return;
+        }
+
+        isCapturing = true;
+        captureBtn.disabled = true;
+        countdownDisplay.textContent = '3';
+
+        if (activeStream) {
+          activeStream.getTracks().forEach(track => track.stop());
+          activeStream = null;
+        }
+
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user' },
+            audio: false
+          });
+          activeStream = stream;
+
+          const video = document.createElement('video');
+          video.playsInline = true;
+          video.muted = true;
+          video.srcObject = stream;
+          await video.play();
+
+          await new Promise(resolve => setTimeout(resolve, 300));
+
+          let count = 3;
+          countdownDisplay.textContent = count;
+
+          countdownInterval = setInterval(() => {
+            count -= 1;
+            if (count > 0) {
+              countdownDisplay.textContent = count;
+            } else {
+              clearInterval(countdownInterval);
+              countdownInterval = null;
+              countdownDisplay.textContent = '📸';
+
+              const canvas = document.createElement('canvas');
+              canvas.width = video.videoWidth || 640;
+              canvas.height = video.videoHeight || 480;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+              const capturedImage = new Image();
+              capturedImage.onload = async () => {
+                if (activeStream) {
+                  activeStream.getTracks().forEach(track => track.stop());
+                  activeStream = null;
+                }
+                await processAndDisplay(capturedImage);
+                isCapturing = false;
+                captureBtn.disabled = false;
+              };
+              capturedImage.src = canvas.toDataURL('image/png');
+            }
+          }, 1000);
+
+        } catch (err) {
+          console.error('Gagal akses kamera', err);
+          alert('Tidak bisa mengakses kamera. Gunakan opsi galeri ya 🙈');
+          countdownDisplay.textContent = '📸';
+          isCapturing = false;
+          captureBtn.disabled = false;
+          if (activeStream) {
+            activeStream.getTracks().forEach(track => track.stop());
+            activeStream = null;
+          }
+        }
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        if (!currentImageBlob) return;
+        const url = URL.createObjectURL(currentImageBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `GhibliLens_${Date.now()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 2000);
+      });
+
+      resetPreviewToPlaceholder();
+
+      window.addEventListener('beforeunload', () => {
+        if (activeStream) {
+          activeStream.getTracks().forEach(track => track.stop());
+          activeStream = null;
+        }
+        if (countdownInterval) clearInterval(countdownInterval);
+      });
+    })();
+  </script>
+</body>
+</html>
