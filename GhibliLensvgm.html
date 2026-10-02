@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghibli Lens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --primary-color: #7b9e7b;
+            --primary-hover: #658565;
+            --text-dark: #4a4238;
+            --text-light: #7a7266;
+            --card-bg: #ffffff;
+            --accent-color: #e8b07d;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            padding: 24px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(123, 158, 123, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .privacy-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            background-color: rgba(123, 158, 123, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(123, 158, 123, 0.1);
+        }
+
+        .camera-action {
+            text-align: center;
+        }
+
+        .camera-action p {
+            margin-bottom: 20px;
+        }
+
+        .btn-capture {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(123, 158, 123, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-capture:hover {
+            transform: scale(1.05);
+            background-color: var(--primary-hover);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+            margin-top: 0;
+            margin-bottom: 16px;
+            border-bottom: 2px dashed rgba(123, 158, 123, 0.2);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .btn-gallery {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            box-sizing: border-box;
+        }
+
+        .btn-gallery:hover {
+            opacity: 0.9;
+        }
+
+        .setting-group {
+            margin-bottom: 16px;
+        }
+
+        .setting-group label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary-color);
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            color: var(--text-dark);
+            background-color: #fafafa;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Result Section */
+        #result-section {
+            display: none; /* Hidden by default until image is selected */
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .image-preview {
+            width: 100%;
+            min-height: 200px;
+            background-color: #eee;
+            border-radius: 12px;
+            margin: 16px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid var(--primary-color);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .help-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .btn-download {
+            display: block;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.2s;
+        }
+
+        .btn-download:hover {
+            background-color: var(--primary-hover);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <h1>Ghibli Lens</h1>
+            <div class="subtitle">Potret dunia dengan warna dongeng ✨</div>
+            <div class="privacy-note">Semua diproses di perangkatmu. Fotomu tidak dikirim ke mana pun.</div>
+        </header>
+
+        <!-- Camera Section -->
+        <div class="section-card camera-action">
+            <p>Ketuk tombol besar. Hitung mundur 3-2-1, lalu senyum!</p>
+            <button class="btn-capture" id="capture-btn" aria-label="Ambil foto">📸</button>
+        </div>
+
+        <!-- Fallback Section -->
+        <div class="section-card">
+            <h2>Eh, kameranya malu-malu 🙈</h2>
+            <label for="file-upload" class="btn-gallery">Pilih foto dari galeri 🖼️</label>
+            <input type="file" id="file-upload" accept="image/*" style="display:none;">
+        </div>
+
+        <!-- Settings Section -->
+        <div class="section-card">
+            <h2>Pilih suasana ✨</h2>
+            
+            <div class="setting-group">
+                <label for="intensity">
+                    <span>Intensitas</span>
+                    <span id="intensity-val">80%</span>
+                </label>
+                <input type="range" id="intensity" min="0" max="100" value="80">
+            </div>
+
+            <div class="setting-group">
+                <label for="camera-style">Gaya kamera</label>
+                <select id="camera-style">
+                    <option value="warm">Spirited Away (Warm & Magical)</option>
+                    <option value="nature">Totoro (Lush Greens)</option>
+                    <option value="breeze">Kiki's Delivery (Sky & Blue)</option>
+                    <option value="vintage">Howl's Moving Castle (Vintage)</option>
+                </select>
+            </div>
+
+            <label class="checkbox-group">
+                <input type="checkbox" id="date-stamp" checked> 
+                Cap tanggal
+            </label>
+        </div>
+
+        <!-- Result Section -->
+        <div class="section-card" id="result-section">
+            <h3>Foto siap! 🌿</h3>
+            
+            <div class="image-preview" id="image-preview-container">
+                <span style="color: #999;">Hasil foto Ghibli Lens</span>
+            </div>
+            
+            <p class="help-text">Kalau unduhan tidak berjalan, tekan lama fotonya lalu pilih Simpan.</p>
+            
+            <button class="btn-download" id="download-btn">Download PNG</button>
+        </div>
+
+    </div>
+
+    <script>
+        // Update Intensity Slider Text
+        const intensitySlider = document.getElementById('intensity');
+        const intensityVal = document.getElementById('intensity-val');
+
+        intensitySlider.addEventListener('input', function() {
+            intensityVal.textContent = this.value + '%';
+        });
+
+        // Handle Camera Button Mock
+        document.getElementById('capture-btn').addEventListener('click', function() {
+            alert("Sedang menyiapkan kamera...\n\n(Simulasi) 3... 2... 1... 📸");
+        });
+
+        // Handle File Upload to show result section
+        const fileUpload = document.getElementById('file-upload');
+        const resultSection = document.getElementById('result-section');
+        const imageContainer = document.getElementById('image-preview-container');
+
+        fileUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Show result section
+                resultSection.style.display = 'block';
+                
+                // Read and display the image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageContainer.innerHTML = ''; // Clear placeholder
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Hasil foto Ghibli Lens';
+                    
+                    // Add a tiny bit of CSS filter to mock the "Ghibli" effect based on intensity
+                    const intensityValue = document.getElementById('intensity').value;
+                    const brightness = 1 + (intensityValue * 0.002);
+                    const contrast = 1 + (intensityValue * 0.002);
+                    const saturate = 1 + (intensityValue * 0.005);
+                    img.style.filter = `brightness(${brightness}) contrast(${contrast}) saturate(${saturate}) sepia(0.2)`;
+                    
+                    imageContainer.appendChild(img);
+                    
+                    // Scroll to result
+                    resultSection.scrollIntoView({ behavior: 'smooth' });
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Handle Download Button Mock
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const img = imageContainer.querySelector('img');
+            if (img) {
+                // Mock download behavior
+                const a = document.createElement('a');
+                a.href = img.src;
+                a.download = 'Ghibli_Lens_Result.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                alert("Silakan ambil atau pilih foto terlebih dahulu!");
+            }
+        });
+    </script>
+</body>
+</html>
