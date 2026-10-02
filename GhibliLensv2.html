@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ghibli Lens</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#A8E6E0;--cream:#FFF8E7;--btn:#24525a;--ink:#24525a;--b1:#BFE3F5;--b2:#C8F4E0;--b3:#FFF8E7;--card:rgba(255,248,231,.88);--hl:rgba(255,255,255,.9);--cl:.8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--ink:#e6f7ef;--b1:#16414b;--b2:#1f5559;--b3:#2b6560;--card:rgba(22,64,70,.85);--hl:rgba(0,0,0,.3);--cl:.2}}
+:root[data-theme=dark]{--ink:#e6f7ef;--b1:#16414b;--b2:#1f5559;--b3:#2b6560;--card:rgba(22,64,70,.85);--hl:rgba(0,0,0,.3);--cl:.2}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;font-family:Fredoka,Quicksand,ui-rounded,"Hiragino Maru Gothic ProN",system-ui,sans-serif;color:var(--ink);background:linear-gradient(var(--b1),var(--b2) 55%,var(--b3)) fixed;overflow-x:hidden}
+#sky{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.cl{position:absolute;left:-260px;background:#fff;border-radius:99px;opacity:var(--cl);animation:drift linear infinite}
+.cl:before,.cl:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cl:before{width:50%;height:170%;left:14%;top:-75%}
+.cl:after{width:36%;height:130%;left:52%;top:-45%}
+@keyframes drift{to{transform:translateX(calc(100vw + 560px))}}
+main{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:22px 16px 30px}
+.screen{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+#home{min-height:80vh;min-height:calc(100dvh - 60px);justify-content:center}
+h1{margin:0;font-size:clamp(2.7rem,13vw,3.7rem);font-weight:700;letter-spacing:.01em;text-shadow:0 3px 0 var(--hl),0 10px 22px rgba(40,120,130,.25)}
+h2,h3{margin:0;font-size:1.5rem;font-weight:600}
+.tag{margin:0;font-size:1.15rem}
+.sm{margin:0;font-size:.85rem;opacity:.85;max-width:310px}
+i{display:block;font-style:normal}
+.soot{width:100%;display:block;transition:translate .25s ease-out;animation:bob 3.2s ease-in-out infinite}
+.eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+.p{transition:transform .15s}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+.big{width:160px}.mini{width:54px;flex:none}
+.peek{position:absolute;right:22px;top:-36px;width:62px;z-index:0}
+.btn{display:inline-block;font:600 1.1rem/1.1 inherit;font-family:inherit;padding:15px 26px;border:0;border-radius:999px;background:var(--cyan);color:var(--btn);text-decoration:none;cursor:pointer;box-shadow:0 6px 0 #7fc9c1,0 12px 20px rgba(40,120,130,.25);transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #7fc9c1,0 5px 10px rgba(40,120,130,.25)}
+.btn.alt{background:var(--cream);box-shadow:0 6px 0 #ead9a8,0 12px 20px rgba(40,120,130,.2)}
+.btn.alt:active{box-shadow:0 2px 0 #ead9a8,0 5px 10px rgba(40,120,130,.2)}
+.lnk{background:none;border:0;font:inherit;color:var(--ink);text-decoration:underline;cursor:pointer;padding:8px}
+:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+.fw{position:relative;width:100%;margin-top:30px}
+.frame{position:relative;z-index:1;width:100%;aspect-ratio:3/4;border:8px solid var(--cyan);border-radius:38px;overflow:hidden;background:#0f2d31;box-shadow:0 0 0 5px var(--hl),0 14px 34px rgba(40,120,130,.3)}
+.frame video{width:100%;height:100%;object-fit:cover;display:block}
+.mir{transform:scaleX(-1)}
+#cd{position:absolute;inset:0;display:grid;place-items:center;font-size:9rem;font-weight:700;color:#fff;text-shadow:0 6px 0 var(--cyan),0 0 30px rgba(168,230,224,.9);pointer-events:none}
+.pop{animation:pop .9s ease-out}
+@keyframes pop{0%{transform:scale(.3);opacity:0}25%{transform:scale(1.15);opacity:1}100%{transform:scale(.9);opacity:.2}}
+.ctl{display:flex;align-items:center;justify-content:space-between;width:100%;padding:0 8px}
+.rnd{width:58px;height:58px;border-radius:50%;border:0;background:var(--cream);font-size:1.5rem;cursor:pointer;box-shadow:0 5px 0 #ead9a8,0 10px 16px rgba(40,120,130,.2)}
+.rnd:active{transform:translateY(3px)}
+.shut{width:92px;height:92px;border-radius:50%;border:8px solid var(--cream);background:var(--cyan);cursor:pointer;box-shadow:0 0 0 5px var(--cyan),0 10px 22px rgba(40,120,130,.35);transition:transform .12s}
+.shut:active{transform:scale(.92)}
+.shut:disabled{opacity:.6}
+#fl{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9}
+#fl.on{animation:fl .5s}
+@keyframes fl{0%{opacity:.9}100%{opacity:0}}
+.spk{position:fixed;z-index:10;pointer-events:none;color:#fff;text-shadow:0 0 8px var(--cyan),0 0 18px #fff;animation:spk 1.2s ease-out forwards}
+@keyframes spk{0%{transform:translate(0,0) scale(0)}35%{opacity:1;transform:translate(calc(var(--dx)*.6),calc(var(--dy)*.6)) scale(1.2) rotate(90deg)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.4) rotate(220deg)}}
+.row{display:flex;align-items:center;gap:12px}
+#cv{width:100%;height:auto;display:block;border:8px solid var(--cyan);border-radius:32px;background:#fff;box-shadow:0 0 0 5px var(--hl),0 14px 34px rgba(40,120,130,.3)}
+.prs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;width:100%}
+.pr{flex:0 0 calc(33.333% - 7px);border:4px solid transparent;border-radius:22px;background:var(--card);padding:6px 6px 9px;font:inherit;color:var(--ink);cursor:pointer;box-shadow:0 6px 14px rgba(40,120,130,.18)}
+.pr canvas{width:100%;display:block;border-radius:15px;margin-bottom:6px;background:#ddd}
+.pr b{display:block;font-size:.82rem;font-weight:600}
+.pr small{display:block;font-size:.68rem;opacity:.8}
+.pr[aria-pressed=true]{border-color:var(--cyan);background:var(--cream);color:var(--btn)}
+.card{width:100%;background:var(--card);border-radius:26px;padding:14px 18px;margin:0;box-shadow:0 8px 20px rgba(40,120,130,.15)}
+.card label{display:flex;justify-content:space-between;font-weight:500}
+input[type=range]{width:100%;height:28px;accent-color:#4fbfb6}
+.acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;width:100%}
+.acts .btn{flex:1 1 40%;padding:14px 12px;font-size:1rem}
+#sh{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(20,70,80,.55)}
+#sh .card{max-width:360px;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;max-height:100%;overflow:auto}
+#sh img{width:100%;border-radius:18px}
+@media(prefers-reduced-motion:reduce){.cl,.eyes,.soot{animation-play-state:paused}.spk{display:none}}
+</style>
+</head>
+<body>
+<div id="sky" aria-hidden="true"></div>
+<main>
+<section class="screen" id="home">
+  <i data-soot class="big"></i>
+  <h1>Ghibli Lens</h1>
+  <p class="tag">Potret dunia dengan warna dongeng ✨</p>
+  <button class="btn" id="open">Buka Kamera 📷</button>
+  <p class="sm">Semua diproses di perangkatmu. Fotomu tidak dikirim ke mana pun.</p>
+</section>
+
+<section class="screen" id="cam" hidden>
+  <div class="fw"><i data-soot class="peek"></i>
+    <div class="frame"><video id="vid" playsinline muted></video><div id="cd" aria-live="assertive"></div></div>
+  </div>
+  <div class="ctl">
+    <button class="rnd" id="bk" aria-label="Kembali ke awal">🏠</button>
+    <button class="shut" id="shot" aria-label="Ambil foto"></button>
+    <button class="rnd" id="flip" aria-label="Balik kamera depan/belakang">🔄</button>
+  </div>
+  <p class="sm">Ketuk tombol besar. Hitung mundur 3-2-1, lalu senyum!</p>
+</section>
+
+<section class="screen" id="err" hidden>
+  <i data-soot class="big"></i>
+  <h2>Eh, kameranya malu-malu 🙈</h2>
+  <p class="card" id="em"></p>
+  <button class="btn" id="retry">Coba lagi</button>
+  <label class="btn alt">Pilih foto dari galeri 🖼️<input type="file" id="gal" accept="image/*" hidden></label>
+  <button class="lnk" id="bk2">Kembali ke awal</button>
+</section>
+
+<section class="screen" id="res" hidden>
+  <div class="row"><i data-soot class="mini"></i><h2>Pilih suasana ✨</h2></div>
+  <canvas id="cv"></canvas>
+  <div class="prs" id="prs"></div>
+  <div class="card"><label for="int"><span>Intensitas</span><span id="iv">80%</span></label><input type="range" id="int" min="0" max="100" value="80"></div>
+  <div class="acts">
+    <button class="btn" id="dl">⬇️ Download PNG</button>
+    <button class="btn alt" id="rt">📷 Ulang</button>
+    <button class="btn alt" id="sd">💌 Bagikan</button>
+  </div>
+</section>
+</main>
+
+<div id="fl"></div>
+<div id="sh" hidden><div class="card">
+  <h3>Foto siap! 🌿</h3>
+  <img id="shi" alt="Hasil foto Ghibli Lens">
+  <p class="sm">Kalau unduhan tidak berjalan, tekan lama fotonya lalu pilih Simpan.</p>
+  <a class="btn" id="sha" download="ghibli-lens.png">Download PNG</a>
+  <button class="btn alt" id="shx">Tutup</button>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s),all=s=>document.querySelectorAll(s),wait=t=>new Promise(r=>setTimeout(r,t));
+const vid=$('#vid'),cv=$('#cv'),cd=$('#cd');
+let face='environment',stream,busy=false,orig,cur,W,H,pk='sky',raf=0,ctx;
+
+/* clouds */
+[[6,200,70],[20,130,52],[38,250,92],[56,160,64],[72,220,82],[86,120,48]].forEach(([t,w,d],i)=>{
+  const c=document.createElement('div');c.className='cl';
+  Object.assign(c.style,{top:t+'%',width:w+'px',height:w*.28+'px',animationDuration:d+'s',animationDelay:-d*((i*.37)%1)+'s'});
+  $('#sky').appendChild(c)});
+
+/* soot sprite */
+function soot(){let f='';
+  for(let i=0;i<22;i++){const a=i/22*6.283,l=34+(i*7%6);f+=`<line x1="${50+Math.cos(a)*24}" y1="${50+Math.sin(a)*24}" x2="${50+Math.cos(a)*l}" y2="${50+Math.sin(a)*l}"/>`}
+  return `<svg class="soot" viewBox="0 0 100 100" aria-hidden="true"><g stroke="#2b2b35" stroke-width="5" stroke-linecap="round">${f}</g><circle cx="50" cy="50" r="30" fill="#2b2b35"/><g class="eyes"><circle cx="39" cy="47" r="10" fill="#fff"/><circle cx="62" cy="47" r="10" fill="#fff"/><circle class="p" cx="39" cy="47" r="4.5" fill="#1b1b22"/><circle class="p" cx="62" cy="47" r="4.5" fill="#1b1b22"/></g></svg>`}
+all('[data-soot]').forEach(e=>e.innerHTML=soot());
+addEventListener('pointermove',e=>all('.soot').forEach(s=>{
+  const r=s.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),a=Math.atan2(dy,dx),m=Math.min(1,Math.hypot(dx,dy)/220);
+  s.querySelectorAll('.p').forEach(p=>p.style.transform=`translate(${Math.cos(a)*4.5*m}px,${Math.sin(a)*4.5*m}px)`);
+  s.style.translate=`${Math.cos(a)*7*m}px ${Math.sin(a)*7*m}px`}));
+
+/* presets + pixel filter */
+const K=['sky','gold','forest','sakura','lilac'],N=[['Sky Whisper','dingin & dreamy'],['Golden Hour','hangat & nostalgia'],['Totoro Forest','hijau lembut matte'],['Sakura Haze','merah muda pudar'],['Lilac Mist','ungu kelabu berkabut']];
+const P={
+  sky:{m:[.9,1.03,1.12],o:[-6,4,14],c:.9,s:1.05,v:.25,g:7,fade:12,glow:.04},
+  gold:{m:[1.1,1,.8],o:[16,6,-10],c:1.06,s:1.18,v:.35,g:9,fade:6,glow:.22},
+  forest:{m:[.96,1.08,.9],o:[-3,6,-2],c:.88,s:.88,v:.3,g:11,fade:24,glow:0},
+  sakura:{m:[1.05,.98,1],o:[12,2,6],c:.9,s:.62,v:.28,g:8,fade:20,glow:.1},
+  lilac:{m:[.98,.98,1.06],o:[4,2,12],c:.88,s:.55,v:.32,g:9,fade:26,glow:.03}};
+function filt(s,d,w,h,p,k){
+  const a=s.data,o=d.data,cx=w/2,cy=h/2,md=cx*cx+cy*cy,f=p.fade/255;
+  for(let y=0,i=0;y<h;y++){const dy=(y-cy)*(y-cy);
+    for(let x=0;x<w;x++,i+=4){
+      const r=a[i],g=a[i+1],b=a[i+2];
+      let R=(r*p.m[0]+p.o[0]-128)*p.c+128,G=(g*p.m[1]+p.o[1]-128)*p.c+128,B=(b*p.m[2]+p.o[2]-128)*p.c+128;
+      const l=.299*R+.587*G+.114*B;
+      R=l+(R-l)*p.s;G=l+(G-l)*p.s;B=l+(B-l)*p.s;
+      const hl=p.glow*(l/255)*(l/255)*255;R+=hl;G+=hl*.7;B+=hl*.35;
+      R+=(255-R)*f;G+=(255-G)*f;B+=(255-B)*f;
+      const v=1-p.v*1.4*((x-cx)*(x-cx)+dy)/md,n=(((Math.imul(i>>2,2654435761)>>>0)%1000)/1000-.5)*p.g*2;
+      o[i]=r+(R*v+n-r)*k;o[i+1]=g+(G*v+n-g)*k;o[i+2]=b+(B*v+n-b)*k;o[i+3]=255}}}
+
+$('#prs').innerHTML=K.map((k,i)=>`<button class="pr" data-k="${k}" aria-pressed="${k==pk}"><canvas></canvas><b>${N[i][0]}</b><small>${N[i][1]}</small></button>`).join('');
+all('.pr').forEach(b=>b.onclick=()=>{pk=b.dataset.k;all('.pr').forEach(x=>x.setAttribute('aria-pressed',x==b));queue()});
+function render(){raf=0;const k=$('#int').value;filt(orig,cur,W,H,P[pk],k/100);cv.getContext('2d').putImageData(cur,0,0);$('#iv').textContent=k+'%'}
+const queue=()=>raf||(raf=requestAnimationFrame(render));
+$('#int').oninput=queue;
+
+function setPhoto(img,iw,ih,crop,mir){
+  let sx=0,sy=0,cw=iw,ch=ih;
+  if(crop){const t=.75;if(iw/ih>t){cw=ih*t;sx=(iw-cw)/2}else{ch=iw/t;sy=(ih-ch)/2}}
+  const k=Math.min(1,1280/Math.max(cw,ch));W=cv.width=Math.round(cw*k);H=cv.height=Math.round(ch*k);
+  const x=cv.getContext('2d');x.save();if(mir){x.translate(W,0);x.scale(-1,1)}x.drawImage(img,sx,sy,cw,ch,0,0,W,H);x.restore();
+  orig=x.getImageData(0,0,W,H);cur=x.createImageData(W,H);
+  const tw=110,th=Math.round(tw*H/W),t=document.createElement('canvas');t.width=tw;t.height=th;
+  const tx=t.getContext('2d');tx.drawImage(cv,0,0,tw,th);const sm=tx.getImageData(0,0,tw,th);
+  all('.pr canvas').forEach((c,i)=>{c.width=tw;c.height=th;const d=new ImageData(tw,th);filt(sm,d,tw,th,P[K[i]],1);c.getContext('2d').putImageData(d,0,0)});
+  render()}
+
+/* screens + camera */
+const show=id=>{['home','cam','err','res'].forEach(s=>$('#'+s).hidden=s!=id);scrollTo(0,0)};
+const MSG={
+  NotAllowedError:'Izin kamera belum diberikan. Ketuk ikon gembok di address bar, pilih Izinkan kamera, lalu ketuk Coba lagi.',
+  NotFoundError:'Tidak ada kamera yang terdeteksi di perangkat ini. Kamu tetap bisa memilih foto dari galeri.',
+  NotSupported:'Browser ini belum mendukung kamera, atau halaman tidak dibuka lewat HTTPS. Coba pilih foto dari galeri.',
+  x:'Kamera tidak bisa dibuka, mungkin sedang dipakai aplikasi lain. Tutup aplikasi itu, lalu coba lagi.'};
+const stop=()=>{stream&&stream.getTracks().forEach(t=>t.stop());stream=null};
+function fail(n){stop();$('#em').textContent=MSG[n]||MSG.x;show('err')}
+async function start(){
+  stop();busy=false;$('#shot').disabled=false;show('cam');
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return fail('NotSupported');
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:face},width:{ideal:1920}},audio:false});
+    vid.srcObject=stream;vid.classList.toggle('mir',face=='user');await vid.play()
+  }catch(e){fail(e.name)}}
+
+/* sound + fx */
+function tone(f,t0,d,type='triangle'){
+  const o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+t0;
+  o.type=type;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.4,t+d);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+  o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+d+.05)}
+const snd=fn=>{try{fn()}catch(e){}};
+function sparkle(){
+  const r=$('.frame').getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+  for(let i=0;i<20;i++){const s=document.createElement('span'),a=Math.random()*6.28,d=90+Math.random()*140;
+    s.className='spk';s.textContent=['✦','✧','✨','⋆'][i%4];
+    s.style.cssText=`left:${cx}px;top:${cy}px;--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;font-size:${16+Math.random()*20}px`;
+    document.body.appendChild(s);setTimeout(()=>s.remove(),1300)}}
+
+async function shoot(){
+  if(busy||!stream)return;busy=true;$('#shot').disabled=true;
+  snd(()=>{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();ctx.resume()});
+  for(let n=3;n>0;n--){
+    cd.textContent=n;cd.classList.remove('pop');void cd.offsetWidth;cd.classList.add('pop');
+    snd(()=>tone(520+(3-n)*140,0,.18));await wait(950)}
+  cd.textContent='';
+  setPhoto(vid,vid.videoWidth,vid.videoHeight,true,face=='user');
+  $('#fl').classList.remove('on');void $('#fl').offsetWidth;$('#fl').classList.add('on');
+  sparkle();snd(()=>{tone(880,0,.15,'sine');tone(1320,.12,.3,'sine')});
+  await wait(750);stop();show('res')}
+
+/* actions */
+const blob=()=>new Promise(r=>cv.toBlob(r,'image/png'));
+function sheet(b){const u=URL.createObjectURL(b);$('#shi').src=u;$('#sha').href=u;$('#sh').hidden=false;return u}
+async function save(){sheet(await blob());$('#sha').click()}
+async function share(){
+  const b=await blob(),f=new File([b],'ghibli-lens.png',{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Ghibli Lens'});return}}
+  catch(e){if(e.name=='AbortError')return}
+  sheet(b)}
+
+$('#open').onclick=start;$('#retry').onclick=start;$('#rt').onclick=start;
+$('#shot').onclick=shoot;
+$('#flip').onclick=()=>{if(busy)return;face=face=='user'?'environment':'user';start()};
+$('#bk').onclick=$('#bk2').onclick=()=>{stop();busy=false;show('home')};
+$('#dl').onclick=save;$('#sd').onclick=share;$('#shx').onclick=()=>$('#sh').hidden=true;
+$('#gal').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const im=new Image();im.onload=()=>{setPhoto(im,im.naturalWidth,im.naturalHeight,false,false);URL.revokeObjectURL(im.src);show('res')};
+  im.src=URL.createObjectURL(f);e.target.value=''};
+</script>
+</body>
+</html>
